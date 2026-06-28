@@ -84,8 +84,10 @@ const GRID_H = 5
 export const Hero3DWebGL = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mouseRef = useRef({ x: -9999, y: -9999 })
+  const btnShownRef = useRef(false)
   const [titleVisible, setTitleVisible] = useState(false)
   const [sloganVisible, setSloganVisible] = useState(false)
+  const [btnVisible, setBtnVisible] = useState(false)
 
   useEffect(() => {
     const t1 = setTimeout(() => setTitleVisible(true), 800)
@@ -216,8 +218,12 @@ export const Hero3DWebGL = () => {
       const progress = Math.floor(eased * edges.length)
       const assembled = t >= 1
 
-      // Track when assembly finished for label fade
+      // Track when assembly finished for label fade + button
       if (assembled && labelAlphaStart === 0) labelAlphaStart = now
+      if (assembled && !btnShownRef.current) {
+        btnShownRef.current = true
+        setTimeout(() => setBtnVisible(true), 800)
+      }
 
       const W = canvas.width
       const H = canvas.height
@@ -406,6 +412,18 @@ export const Hero3DWebGL = () => {
           className={`mt-4 font-space-mono text-sm md:text-base xl:text-lg text-white/50 tracking-[0.3em] uppercase transition-all duration-700 ${sloganVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
         >
           Those who dare truly live
+        </div>
+
+        {/* CTA button */}
+        <div className={`mt-10 pointer-events-auto transition-all duration-700 ${btnVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}>
+          <button
+            onClick={() => document.getElementById("order")?.scrollIntoView({ behavior: "smooth" })}
+            className="relative group font-orbitron font-bold text-sm tracking-[0.2em] uppercase px-10 py-4 border border-primary/60 text-primary overflow-hidden transition-all duration-300 hover:border-primary hover:text-white"
+          >
+            {/* fill animation on hover */}
+            <span className="absolute inset-0 bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
+            <span className="relative z-10">Заказать сборку</span>
+          </button>
         </div>
       </div>
     </div>
