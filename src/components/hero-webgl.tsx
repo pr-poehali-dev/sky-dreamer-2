@@ -72,8 +72,8 @@ const Scene = () => {
         // Flow effect based on progress
         float flow = 1.0 - smoothstep(0.0, 0.02, abs(depth - uProgress));
 
-        // Red scanning overlay
-        vec3 mask = vec3(dot * flow * 10.0, 0.0, 0.0);
+        // Orange scanning overlay (Marathon style)
+        vec3 mask = vec3(dot * flow * 10.0, dot * flow * 4.5, dot * flow * 0.5);
 
         // Combine effects
         vec3 final = baseColor.rgb + mask;
@@ -114,8 +114,8 @@ const Scene = () => {
 }
 
 export const Hero3DWebGL = () => {
-  const titleWords = "Synapse AI".split(" ")
-  const subtitle = "Нейроинтерфейсы нового поколения."
+  const titleWords = "FORGE KEYS".split(" ")
+  const subtitle = "Механические клавиатуры и игровые ПК на заказ."
   const [visibleWords, setVisibleWords] = useState(0)
   const [subtitleVisible, setSubtitleVisible] = useState(false)
   const [delays, setDelays] = useState<number[]>([])

@@ -1,42 +1,43 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import Icon from "@/components/ui/icon"
 
 const features = [
   {
-    title: "Адаптивная нейрообработка",
-    description: "Самооптимизирующиеся алгоритмы, которые обучаются на нейронных паттернах и улучшают интерпретацию сигналов.",
-    icon: "brain",
-    badge: "ИИ",
+    title: "Кастомные свитчи",
+    description: "Линейные, тактильные или кликающие — подбираем механику под ваш стиль игры. Hot-swap сокеты для замены без пайки.",
+    icon: "Keyboard",
+    badge: "Hot-swap",
   },
   {
-    title: "Медицинская защита",
-    description: "Шифрование по стандартам FDA со сквозной защитой конфиденциальных нейронных данных.",
-    icon: "lock",
-    badge: "Сертификат",
+    title: "Сборка ПК под задачу",
+    description: "Подбираем комплектующие под ваш бюджет и игры — от киберспорта на 240 FPS до 4K-ультра. Без переплат за лишнее.",
+    icon: "Cpu",
+    badge: "Под заказ",
   },
   {
-    title: "Интуитивное управление",
-    description: "Естественная трансляция мыслей в действия с откликом менее миллисекунды и точностью 99,7%.",
-    icon: "globe",
-    badge: "Точность",
+    title: "Молниеносный отклик",
+    description: "Полный N-key rollover и опрос 8000 Гц. Каждое нажатие регистрируется мгновенно — ни одного пропущенного клика в бою.",
+    icon: "Zap",
+    badge: "8000 Гц",
   },
   {
-    title: "Предиктивная калибровка",
-    description: "ML-модели, которые предугадывают намерения пользователя и оптимизируют нейронные пути.",
-    icon: "zap",
-    badge: "Умный",
+    title: "Премиум-материалы",
+    description: "Алюминиевый корпус, PBT-кейкапы с двойной отливкой и звукоизоляция. Глубокий thock-звук и долговечность на годы.",
+    icon: "Gem",
+    badge: "Алюминий",
   },
   {
-    title: "Биометрическая интеграция",
-    description: "Бесшовная синхронизация с мониторингом жизненных показателей для контроля здоровья.",
-    icon: "link",
-    badge: "Связь",
+    title: "RGB и кастом-дизайн",
+    description: "Программируемая подсветка по слоям, артизан-кейкапы и гравировка. Соберём клавиатуру в вашей цветовой схеме.",
+    icon: "Palette",
+    badge: "RGB",
   },
   {
-    title: "Поддержка XR",
-    description: "Нативная совместимость с AR/VR-средами для терапевтических и рабочих приложений.",
-    icon: "target",
-    badge: "XR Ready",
+    title: "Гарантия и поддержка",
+    description: "3 года гарантии на сборку, бесплатная диагностика и апгрейды. Тестируем каждое устройство перед отправкой.",
+    icon: "ShieldCheck",
+    badge: "3 года",
   },
 ]
 
@@ -45,9 +46,9 @@ export function FeaturesSection() {
     <section className="py-24 px-6 bg-background">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-foreground mb-4 font-sans">Возможности нового поколения</h2>
+          <h2 className="text-4xl font-bold text-foreground mb-4 font-orbitron uppercase tracking-wide">Собрано для победы</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Почувствуйте будущее с технологиями, которые переопределяют возможное
+            Каждая деталь подобрана так, чтобы дать вам преимущество в игре
           </p>
         </div>
 
@@ -60,15 +61,10 @@ export function FeaturesSection() {
             >
               <CardHeader>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-3xl">
-                    {feature.icon === "brain" && "&#129504;"}
-                    {feature.icon === "lock" && "&#128274;"}
-                    {feature.icon === "globe" && "&#127760;"}
-                    {feature.icon === "zap" && "&#9889;"}
-                    {feature.icon === "link" && "&#128279;"}
-                    {feature.icon === "target" && "&#127919;"}
+                  <span className="text-primary">
+                    <Icon name={feature.icon} size={32} />
                   </span>
-                  <Badge variant="secondary" className="bg-accent text-accent-foreground">
+                  <Badge variant="secondary" className="bg-accent text-accent-foreground font-semibold">
                     {feature.badge}
                   </Badge>
                 </div>

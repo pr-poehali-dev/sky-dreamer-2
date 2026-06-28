@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -47,42 +47,42 @@
   }
 
   .dark {
-    --background: 0 0% 3%;
-    --foreground: 0 0% 98%;
+    --background: 20 14% 4%;
+    --foreground: 30 20% 96%;
 
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 98%;
+    --card: 20 14% 7%;
+    --card-foreground: 30 20% 96%;
 
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 20 14% 7%;
+    --popover-foreground: 30 20% 96%;
 
-    --primary: 0 84% 60%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 18 95% 56%;
+    --primary-foreground: 20 14% 6%;
 
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 20 12% 12%;
+    --secondary-foreground: 30 20% 96%;
 
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 20 10% 12%;
+    --muted-foreground: 30 8% 65%;
 
-    --accent: 0 84% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 18 95% 56%;
+    --accent-foreground: 20 14% 6%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 30 20% 96%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 10%;
-    --ring: 0 84% 60%;
+    --border: 20 10% 16%;
+    --input: 20 10% 12%;
+    --ring: 18 95% 56%;
 
-    --sidebar-background: 0 0% 5%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 0 84% 60%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 0 0% 10%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 0 84% 60%;
+    --sidebar-background: 20 14% 7%;
+    --sidebar-foreground: 30 20% 96%;
+    --sidebar-primary: 18 95% 56%;
+    --sidebar-primary-foreground: 20 14% 6%;
+    --sidebar-accent: 20 10% 12%;
+    --sidebar-accent-foreground: 30 20% 96%;
+    --sidebar-border: 20 10% 16%;
+    --sidebar-ring: 18 95% 56%;
   }
 }
 
@@ -102,19 +102,19 @@
 
 @layer components {
   .font-orbitron {
-    font-family: 'Play', sans-serif;
+    font-family: "Play", sans-serif;
   }
 
   .font-geist {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: "Inter", system-ui, sans-serif;
   }
 
   .font-space-mono {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: "JetBrains Mono", monospace;
   }
 
   .font-display {
-    font-family: 'Play', sans-serif;
+    font-family: "Play", sans-serif;
   }
 
   .fade-in {
@@ -136,7 +136,8 @@
   .glow-border {
     position: relative;
     border: 1px solid transparent;
-    background: linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
+    background:
+      linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
       linear-gradient(45deg, hsl(var(--primary)), hsl(var(--accent))) border-box;
   }
 

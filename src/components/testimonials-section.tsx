@@ -3,25 +3,25 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 const testimonials = [
   {
-    name: "Елена Родригес",
-    role: "Директор по нейронауке, Quantum Dynamics",
-    avatar: "/professional-woman-scientist.png",
-    content:
-      "SynapseAI изменил наш подход к нейрореабилитации. Результаты пациентов улучшились на 340% после внедрения.",
-  },
-  {
-    name: "Маркус Уильямс",
-    role: "Руководитель исследований, Stellar Analytics",
+    name: "Артём Соколов",
+    role: "Стример, шутеры от первого лица",
     avatar: "/cybersecurity-expert-man.jpg",
     content:
-      "Точность и протоколы безопасности не имеют аналогов. Мы значительно ускорили клинические испытания с платформой SynapseAI.",
+      "Заказал кастомную TKL со смазанными свитчами — звук и отклик нереальные. После апгрейда реакция в перестрелках стала заметно быстрее.",
   },
   {
-    name: "Анна Ковальски",
-    role: "Вице-президент по разработке, Nova Industries",
+    name: "Дмитрий Орлов",
+    role: "Киберспортсмен, CS",
+    avatar: "/professional-woman-scientist.png",
+    content:
+      "Собрали ПК под 360 FPS строго в бюджет, ничего лишнего. Тесты прошли при мне, температуры в норме. Рекомендую за честный подход.",
+  },
+  {
+    name: "Кристина Власова",
+    role: "Контент-мейкер и геймер",
     avatar: "/asian-woman-tech-developer.jpg",
     content:
-      "Интеграция прошла безупречно. Адаптивные алгоритмы понимают намерения пользователя лучше любой системы, что мы тестировали.",
+      "Хотела клавиатуру в своей цветовой схеме с артизан-кейкапом — сделали точь-в-точь по референсу. Выглядит как из игры, печатать одно удовольствие.",
   },
 ]
 
@@ -30,9 +30,9 @@ export function TestimonialsSection() {
     <section className="py-24 px-6 bg-card">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-card-foreground mb-4 font-sans">Нам доверяют лидеры</h2>
+          <h2 className="text-4xl font-bold text-card-foreground mb-4 font-orbitron uppercase tracking-wide">Что говорят игроки</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Что говорят лидеры индустрии о нашей революционной технологии
+            Стримеры, киберспортсмены и геймеры о своих сборках от нас
           </p>
         </div>
 
