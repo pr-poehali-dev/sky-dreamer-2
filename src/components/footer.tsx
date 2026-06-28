@@ -83,7 +83,7 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#faq" className="font-space-mono text-gray-400 hover:text-primary transition-colors duration-200">
+                <a href="/delivery" className="font-space-mono text-gray-400 hover:text-primary transition-colors duration-200">
                   Доставка
                 </a>
               </li>

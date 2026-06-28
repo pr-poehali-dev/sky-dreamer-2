@@ -1,9 +1,11 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const navigate = useNavigate()
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-[9999] bg-black/95 backdrop-blur-md border-b border-primary/20">
@@ -31,6 +33,12 @@ export function Navbar() {
               <a href="#about" className="font-geist text-white hover:text-primary transition-colors duration-200">
                 О нас
               </a>
+              <button
+                onClick={() => navigate("/delivery")}
+                className="font-geist text-white hover:text-primary transition-colors duration-200"
+              >
+                Доставка
+              </button>
               <a href="#faq" className="font-geist text-white hover:text-primary transition-colors duration-200">
                 Вопросы
               </a>
@@ -83,6 +91,12 @@ export function Navbar() {
               >
                 О нас
               </a>
+              <button
+                className="block w-full text-left px-3 py-2 font-geist text-white hover:text-primary transition-colors duration-200"
+                onClick={() => { setIsOpen(false); navigate("/delivery") }}
+              >
+                Доставка
+              </button>
               <a
                 href="#faq"
                 className="block px-3 py-2 font-geist text-white hover:text-primary transition-colors duration-200"
