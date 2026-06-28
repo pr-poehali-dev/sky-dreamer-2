@@ -9,22 +9,20 @@ import { FAQSection } from "@/components/faq-section"
 import { CTASection } from "@/components/cta-section"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
+import { OrderModal } from "@/components/order-modal"
 
 export default function Index() {
   return (
     <div className="dark">
       <Navbar />
+      <OrderModal />
       <main>
         <Hero3D />
         <FeaturesSection />
-        <section id="technology">
-          <TechnologySection />
-        </section>
+        <TechnologySection />
         <ApplicationsTimeline />
+        <SafetySection />
         <AboutSection />
-        <section id="safety">
-          <SafetySection />
-        </section>
         <TestimonialsSection />
         <section id="faq">
           <FAQSection />

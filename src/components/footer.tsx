@@ -73,24 +73,27 @@ export function Footer() {
             <h3 className="font-orbitron text-white font-semibold mb-4">Компания</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="font-space-mono text-gray-400 hover:text-primary transition-colors duration-200">
+                <a href="#about" className="font-space-mono text-gray-400 hover:text-primary transition-colors duration-200">
                   О нас
                 </a>
               </li>
               <li>
-                <a href="#" className="font-space-mono text-gray-400 hover:text-primary transition-colors duration-200">
+                <a href="#technology" className="font-space-mono text-gray-400 hover:text-primary transition-colors duration-200">
                   Портфолио
                 </a>
               </li>
               <li>
-                <a href="#" className="font-space-mono text-gray-400 hover:text-primary transition-colors duration-200">
+                <a href="#faq" className="font-space-mono text-gray-400 hover:text-primary transition-colors duration-200">
                   Доставка
                 </a>
               </li>
               <li>
-                <a href="#" className="font-space-mono text-gray-400 hover:text-primary transition-colors duration-200">
+                <button
+                  onClick={() => window.dispatchEvent(new CustomEvent("open-order-modal"))}
+                  className="font-space-mono text-gray-400 hover:text-primary transition-colors duration-200"
+                >
                   Контакты
-                </a>
+                </button>
               </li>
             </ul>
           </div>

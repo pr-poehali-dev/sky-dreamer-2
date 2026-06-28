@@ -28,6 +28,9 @@ export function Navbar() {
               <a href="#safety" className="font-geist text-white hover:text-primary transition-colors duration-200">
                 Сборка ПК
               </a>
+              <a href="#about" className="font-geist text-white hover:text-primary transition-colors duration-200">
+                О нас
+              </a>
               <a href="#faq" className="font-geist text-white hover:text-primary transition-colors duration-200">
                 Вопросы
               </a>
@@ -36,7 +39,12 @@ export function Navbar() {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-geist font-bold border-0">Заказать сборку</Button>
+            <Button
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-geist font-bold border-0"
+              onClick={() => window.dispatchEvent(new CustomEvent("open-order-modal"))}
+            >
+              Заказать сборку
+            </Button>
           </div>
 
           {/* Mobile menu button */}
@@ -69,6 +77,13 @@ export function Navbar() {
                 Сборка ПК
               </a>
               <a
+                href="#about"
+                className="block px-3 py-2 font-geist text-white hover:text-primary transition-colors duration-200"
+                onClick={() => setIsOpen(false)}
+              >
+                О нас
+              </a>
+              <a
                 href="#faq"
                 className="block px-3 py-2 font-geist text-white hover:text-primary transition-colors duration-200"
                 onClick={() => setIsOpen(false)}
@@ -76,7 +91,10 @@ export function Navbar() {
                 Вопросы
               </a>
               <div className="px-3 py-2">
-                <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-geist font-bold border-0">
+                <Button
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-geist font-bold border-0"
+                  onClick={() => { setIsOpen(false); window.dispatchEvent(new CustomEvent("open-order-modal")) }}
+                >
                   Заказать сборку
                 </Button>
               </div>
