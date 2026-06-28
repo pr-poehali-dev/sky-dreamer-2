@@ -7,26 +7,6 @@ const STATS = [
   { value: "48 ч", label: "Среднее время сборки" },
 ]
 
-const TEAM = [
-  {
-    name: "Алексей Р.",
-    role: "Основатель / Механика",
-    bio: "7 лет в кастом-клавиатурах. Участник KeyCon, собрал 200+ клавиатур.",
-    icon: "Keyboard",
-  },
-  {
-    name: "Денис К.",
-    role: "Системный сборщик",
-    bio: "Специалист по игровым ПК и апгрейду. Сертифицирован ASUS / MSI.",
-    icon: "Cpu",
-  },
-  {
-    name: "Мария В.",
-    role: "Дизайн и кейкапы",
-    bio: "Создаёт уникальные раскраски и кастом-наборы кейкапов на заказ.",
-    icon: "Palette",
-  },
-]
 
 const VALUES = [
   { icon: "ShieldCheck", title: "Честность", desc: "Говорим как есть: что реально нужно, а что переплата." },
@@ -47,7 +27,7 @@ export function AboutSection() {
             Люди, которые <span className="text-primary">живут этим</span>
           </h2>
           <p className="text-white/50 font-space-mono max-w-2xl mx-auto leading-relaxed">
-            REклава — это небольшая команда энтузиастов из Москвы. Мы не магазин, не завод.
+            REклава — это небольшая команда энтузиастов из Санкт-Петербурга. Мы не магазин, не завод.
             Мы сами пользуемся тем, что собираем — и собираем только то, чем гордимся.
           </p>
         </div>
@@ -58,25 +38,6 @@ export function AboutSection() {
             <div key={label} className="bg-[#07080b] py-10 px-6 text-center">
               <p className="font-orbitron font-extrabold text-3xl md:text-4xl text-primary mb-2">{value}</p>
               <p className="font-space-mono text-xs text-white/50 tracking-wide uppercase">{label}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Team */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-20">
-          {TEAM.map((member) => (
-            <div
-              key={member.name}
-              className="border border-white/10 bg-white/[0.02] p-7 hover:border-primary/40 transition-all duration-300 group"
-            >
-              <div className="w-12 h-12 border border-primary/30 flex items-center justify-center mb-5 group-hover:border-primary transition-colors">
-                <Icon name={member.icon as "Cpu"} size={22} className="text-primary" />
-              </div>
-              <h4 className="font-orbitron font-bold text-white text-base mb-1 group-hover:text-primary transition-colors">
-                {member.name}
-              </h4>
-              <p className="font-space-mono text-xs text-primary/70 mb-3 tracking-wide">{member.role}</p>
-              <p className="font-space-mono text-xs text-white/50 leading-relaxed">{member.bio}</p>
             </div>
           ))}
         </div>
