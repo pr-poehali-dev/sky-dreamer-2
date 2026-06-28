@@ -11,8 +11,8 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <h1 className="font-orbitron text-xl font-bold text-white tracking-wider">
-              FORGE<span className="text-primary">//KEYS</span>
+            <h1 className="font-orbitron text-xl font-bold tracking-wider">
+              <span className="text-primary">RE</span><span className="text-white">клава</span>
             </h1>
           </div>
 

@@ -1,18 +1,15 @@
-import { Canvas, extend, useFrame } from "@react-three/fiber"
-import { useAspect, useTexture } from "@react-three/drei"
-import { useMemo, useRef, useState, useEffect } from "react"
+import { Canvas, useFrame, useLoader } from "@react-three/fiber"
+import { useMemo, useRef, useState, useEffect, Suspense } from "react"
 import * as THREE from "three"
+import { TextureLoader } from "three"
 
-const TEXTUREMAP = { src: "https://i.postimg.cc/XYwvXN8D/img-4.png" }
-const DEPTHMAP = { src: "https://i.postimg.cc/2SHKQh2q/raw-4.webp" }
+const KEYBOARD_IMG = "https://cdn.poehali.dev/projects/bf322fce-7edc-4c02-a6db-17e26d292b8b/files/96cee49b-3ed5-4d12-b9de-c6650e8b0f5b.jpg"
 
-extend(THREE as unknown as Record<string, unknown>)
-
-const WIDTH = 300
-const HEIGHT = 300
+const WIDTH = 1920
+const HEIGHT = 1080
 
 const Scene = () => {
-  const [rawMap, depthMap] = useTexture([TEXTUREMAP.src, DEPTHMAP.src])
+  const texture = useLoader(TextureLoader, KEYBOARD_IMG)
   const meshRef = useRef<THREE.Mesh>(null)
 
   const material = useMemo(() => {
@@ -26,13 +23,11 @@ const Scene = () => {
 
     const fragmentShader = `
       uniform sampler2D uTexture;
-      uniform sampler2D uDepthMap;
       uniform vec2 uPointer;
       uniform float uProgress;
       uniform float uTime;
       varying vec2 vUv;
 
-      // Simple noise function
       float random(vec2 st) {
         return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
       }
@@ -51,32 +46,31 @@ const Scene = () => {
       void main() {
         vec2 uv = vUv;
 
-        // Depth-based displacement
-        float depth = texture2D(uDepthMap, uv).r;
-        vec2 displacement = depth * uPointer * 0.01;
-        vec2 distortedUv = uv + displacement;
+        // Subtle parallax from pointer
+        vec2 distortedUv = uv + uPointer * 0.012;
 
-        // Base texture
         vec4 baseColor = texture2D(uTexture, distortedUv);
 
-        // Create scanning effect
+        // Scanning dot grid overlay
         float aspect = ${WIDTH}.0 / ${HEIGHT}.0;
         vec2 tUv = vec2(uv.x * aspect, uv.y);
         vec2 tiling = vec2(120.0);
         vec2 tiledUv = mod(tUv * tiling, 2.0) - 1.0;
-
         float brightness = noise(tUv * tiling * 0.5);
         float dist = length(tiledUv);
-        float dot = smoothstep(0.5, 0.49, dist) * brightness;
+        float dotVal = smoothstep(0.5, 0.49, dist) * brightness;
 
-        // Flow effect based on progress
-        float flow = 1.0 - smoothstep(0.0, 0.02, abs(depth - uProgress));
+        float flow = 1.0 - smoothstep(0.0, 0.02, abs(uv.y - uProgress));
 
-        // Orange scanning overlay (Marathon style)
-        vec3 mask = vec3(dot * flow * 10.0, dot * flow * 4.5, dot * flow * 0.5);
+        // Orange glow sweep (Marathon style)
+        vec3 mask = vec3(dotVal * flow * 8.0, dotVal * flow * 3.5, dotVal * flow * 0.3);
 
-        // Combine effects
-        vec3 final = baseColor.rgb + mask;
+        // Vignette
+        vec2 vigUv = uv * 2.0 - 1.0;
+        float vignette = 1.0 - dot(vigUv * vec2(0.6, 0.8), vigUv * vec2(0.6, 0.8));
+        vignette = clamp(vignette, 0.0, 1.0);
+
+        vec3 final = baseColor.rgb * vignette + mask;
 
         gl_FragColor = vec4(final, 1.0);
       }
@@ -84,8 +78,7 @@ const Scene = () => {
 
     return new THREE.ShaderMaterial({
       uniforms: {
-        uTexture: { value: rawMap },
-        uDepthMap: { value: depthMap },
+        uTexture: { value: texture },
         uPointer: { value: new THREE.Vector2(0, 0) },
         uProgress: { value: 0 },
         uTime: { value: 0 },
@@ -93,88 +86,63 @@ const Scene = () => {
       vertexShader,
       fragmentShader,
     })
-  }, [rawMap, depthMap])
-
-  const [w, h] = useAspect(WIDTH, HEIGHT)
+  }, [texture])
 
   useFrame(({ clock, pointer }) => {
     if (material.uniforms) {
-      material.uniforms.uProgress.value = Math.sin(clock.getElapsedTime() * 0.5) * 0.5 + 0.5
+      material.uniforms.uProgress.value = Math.sin(clock.getElapsedTime() * 0.4) * 0.5 + 0.5
       material.uniforms.uPointer.value = pointer
       material.uniforms.uTime.value = clock.getElapsedTime()
     }
   })
 
-  const scaleFactor = 0.3
   return (
-    <mesh ref={meshRef} scale={[w * scaleFactor, h * scaleFactor, 1]} material={material}>
-      <planeGeometry />
+    <mesh ref={meshRef} scale={[2, 2, 1]} material={material}>
+      <planeGeometry args={[1, 1]} />
     </mesh>
   )
 }
 
 export const Hero3DWebGL = () => {
-  const titleWords = "FORGE KEYS".split(" ")
-  const subtitle = "Механические клавиатуры и игровые ПК на заказ."
-  const [visibleWords, setVisibleWords] = useState(0)
+  const [titleVisible, setTitleVisible] = useState(false)
   const [subtitleVisible, setSubtitleVisible] = useState(false)
-  const [delays, setDelays] = useState<number[]>([])
-  const [subtitleDelay, setSubtitleDelay] = useState(0)
+  const [sloganVisible, setSloganVisible] = useState(false)
 
   useEffect(() => {
-    setDelays(titleWords.map(() => Math.random() * 0.07))
-    setSubtitleDelay(Math.random() * 0.1)
-  }, [titleWords.length])
-
-  useEffect(() => {
-    if (visibleWords < titleWords.length) {
-      const timeout = setTimeout(() => setVisibleWords(visibleWords + 1), 600)
-      return () => clearTimeout(timeout)
-    } else {
-      const timeout = setTimeout(() => setSubtitleVisible(true), 800)
-      return () => clearTimeout(timeout)
-    }
-  }, [visibleWords, titleWords.length])
+    const t1 = setTimeout(() => setTitleVisible(true), 400)
+    const t2 = setTimeout(() => setSubtitleVisible(true), 1000)
+    const t3 = setTimeout(() => setSloganVisible(true), 1600)
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
+  }, [])
 
   return (
     <div className="h-screen bg-black relative overflow-hidden">
+      {/* Edge fades */}
       <div className="absolute inset-0 pointer-events-none z-10">
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent" />
-        <div className="absolute top-0 bottom-0 left-0 w-32 bg-gradient-to-r from-black to-transparent" />
-        <div className="absolute top-0 bottom-0 right-0 w-32 bg-gradient-to-l from-black to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-black to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-56 bg-gradient-to-t from-black to-transparent" />
+        <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-black to-transparent" />
+        <div className="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-black to-transparent" />
       </div>
 
-      <div className="h-screen uppercase items-center w-full absolute z-[60] pointer-events-none px-10 flex justify-center flex-col">
-        <div className="text-3xl md:text-5xl xl:text-6xl 2xl:text-7xl font-extrabold font-orbitron">
-          <div className="flex space-x-2 lg:space-x-6 overflow-hidden text-white">
-            {titleWords.map((word, index) => (
-              <div
-                key={index}
-                className={index < visibleWords ? "fade-in" : ""}
-                style={{
-                  animationDelay: `${index * 0.13 + (delays[index] || 0)}s`,
-                  opacity: index < visibleWords ? undefined : 0,
-                }}
-              >
-                {word}
-              </div>
-            ))}
-          </div>
+      {/* Text overlay */}
+      <div className="absolute inset-0 z-[60] pointer-events-none flex flex-col items-center justify-end pb-16 px-6 text-center">
+        {/* Brand name */}
+        <div
+          className={`font-orbitron font-extrabold text-4xl md:text-6xl xl:text-7xl tracking-widest transition-all duration-700 ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+        >
+          <span className="text-primary">RE</span><span className="text-white">клава</span>
         </div>
-        <div className="text-xs md:text-xl xl:text-2xl 2xl:text-3xl mt-2 overflow-hidden text-white font-bold max-w-4xl mx-auto text-center px-4">
-          <div
-            className={subtitleVisible ? "fade-in-subtitle" : ""}
-            style={{
-              animationDelay: `${titleWords.length * 0.13 + 0.2 + subtitleDelay}s`,
-              opacity: subtitleVisible ? undefined : 0,
-            }}
-          >
-            {subtitle}
-          </div>
+
+        {/* Slogan */}
+        <div
+          className={`mt-4 font-space-mono text-sm md:text-base xl:text-lg text-white/60 tracking-[0.3em] uppercase transition-all duration-700 delay-200 ${sloganVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+        >
+          Those who dare truly live
         </div>
       </div>
 
+      {/* Full-screen WebGL canvas */}
       <Canvas
         flat
         gl={{
@@ -183,9 +151,11 @@ export const Hero3DWebGL = () => {
           powerPreference: "high-performance",
         }}
         camera={{ position: [0, 0, 1] }}
-        style={{ background: "#000000" }}
+        style={{ background: "#000000", width: "100%", height: "100%" }}
       >
-        <Scene />
+        <Suspense fallback={null}>
+          <Scene />
+        </Suspense>
       </Canvas>
     </div>
   )
